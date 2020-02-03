@@ -1,9 +1,9 @@
-defmodule Housekeeper.MixProject do
+defmodule FutApi.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :housekeeper,
+      app: :futapi,
       version: "0.1.0",
       elixir: "~> 1.8",
       start_permanent: Mix.env() == :prod,
@@ -15,7 +15,7 @@ defmodule Housekeeper.MixProject do
   def application do
     [
       extra_applications: [:logger, :plug_cowboy],
-      mod: {Housekeeper.Application, []}
+      mod: {FutApi.Application, []}
     ]
   end
 

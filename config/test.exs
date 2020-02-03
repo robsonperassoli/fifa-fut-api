@@ -1,3 +1,3 @@
 use Mix.Config
 
-config :housekeeper, port: 4002
+config :futapi, port: 4002

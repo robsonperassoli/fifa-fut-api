@@ -1,4 +1,4 @@
-defmodule Housekeeper.Endpoint do
+defmodule FutApi.Endpoint do
   use Plug.Router
 
   plug(Plug.Logger)
@@ -11,18 +11,18 @@ defmodule Housekeeper.Endpoint do
     json_decoder: Jason
   )
 
-  # plug(Absinthe.Plug, schema: Housekeeper.Schema)
+  # plug(Absinthe.Plug, schema: FutApi.Schema)
 
   plug(:dispatch)
 
   forward("/graphql",
     to: Absinthe.Plug,
-    init_opts: [schema: Housekeeper.Schema]
+    init_opts: [schema: FutApi.Schema]
   )
 
   forward("graphiql",
     to: Absinthe.Plug.GraphiQL,
-    init_opts: [schema: Housekeeper.Schema]
+    init_opts: [schema: FutApi.Schema]
   )
 
   get "/ping" do

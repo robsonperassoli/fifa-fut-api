@@ -1,4 +1,4 @@
-defmodule Housekeeper.Schema do
+defmodule FutApi.Schema do
   use Absinthe.Schema
 
   @items %{

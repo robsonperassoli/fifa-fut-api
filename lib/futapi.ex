@@ -1,6 +1,6 @@
-defmodule Housekeeper do
+defmodule FutApi do
   @moduledoc """
-  Documentation for Housekeeper.
+  Documentation for FutApi.
   """
 
   @doc """
@@ -8,7 +8,7 @@ defmodule Housekeeper do
 
   ## Examples
 
-      iex> Housekeeper.hello()
+      iex> FutApi.hello()
       :world
 
   """
