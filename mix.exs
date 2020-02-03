@@ -25,7 +25,10 @@ defmodule FutApi.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:jason, "~> 1.1.2"},
       {:absinthe, "~> 1.4.6"},
-      {:absinthe_plug, "~> 1.4.7"}
+      {:absinthe_plug, "~> 1.4.7"},
+      {:tesla, "~> 1.3.0"},
+      {:ecto_sql, "~> 3.0"},
+      {:postgrex, ">= 0.0.0"},
     ]
   end
 end

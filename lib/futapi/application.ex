@@ -7,7 +7,8 @@ defmodule FutApi.Application do
         scheme: :http,
         plug: FutApi.Endpoint,
         options: [port: Application.get_env(:futapi, :port)]
-      )
+      ),
+      FutApi.Repo
     ]
 
     opts = [strategy: :one_for_one, name: FutApi.Supervisor]
