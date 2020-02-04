@@ -5,6 +5,7 @@ defmodule FutApi.Importer do
   alias FutApi.Fifa
   alias FutApi.Repo
   alias FutApi.Fut
+  alias FutApi.Importer.Parser
 
   @name :importer_server
 
@@ -14,7 +15,8 @@ defmodule FutApi.Importer do
     %{body: body} = response
     %{"items" => items, "page" => page, "totalPages" => totalPages} = body
 
-    new_players = players ++ items
+    parsed_players = items |> Enum.map(&Parser.parse_player/1)
+    new_players = players ++ parsed_players
 
     cond do
       page === totalPages -> new_players
@@ -22,20 +24,11 @@ defmodule FutApi.Importer do
     end
   end
 
-  defp save(params) do
-    %{"name" => name, "rating" => rating} = params
+  defp schedule_fetch_players(), do: Process.send_after(self(), :fetch_players, 15_000)
 
-    %{name: name, rating: rating}
-    |> Fut.create_player()
-  end
+  defp schedule_integration(), do: Process.send_after(self(), :integrate_player, 5_000)
 
-  defp schedule_fetch_players() do
-    Process.send_after(self(), :fetch_players, 15_000)
-  end
-
-  defp schedule_integration() do
-    Process.send_after(self(), :integrate_player, 5_000)
-  end
+  defp integrate_next(), do: Process.send(self(), :integrate_player, [])
 
   # Client
   def start_link(_args) do
@@ -69,8 +62,8 @@ defmodule FutApi.Importer do
 
     unless out == :empty do
       {:value, player} = out
-      save(player)
-      Process.send(self(), :integrate_player, [])
+      Fut.create_player(player)
+      integrate_next()
     end
 
     {:noreply, new_state}
