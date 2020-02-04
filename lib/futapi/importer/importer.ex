@@ -11,16 +11,17 @@ defmodule FutApi.Importer do
 
   defp fetch_players(page \\ 1, players \\ []) do
     IO.puts "Fetching players: page #{page}"
-    {:ok, response} = Fifa.get_players(page)
-    %{body: body} = response
-    %{"items" => items, "page" => page, "totalPages" => totalPages} = body
+    %{
+      items: items,
+      total_pages: total_pages
+    } = Fifa.get_players(page)
 
     parsed_players = items |> Enum.map(&Parser.parse_player/1)
     new_players = players ++ parsed_players
 
     cond do
-      page === totalPages -> new_players
-      page < totalPages -> fetch_players(page + 1, new_players)
+      page === total_pages -> new_players
+      page < total_pages -> fetch_players(page + 1, new_players)
     end
   end
 
