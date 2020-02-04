@@ -4,7 +4,15 @@ defmodule FutApi.Fifa do
   plug Tesla.Middleware.BaseUrl, "https://www.easports.com/fifa/ultimate-team/api/fut"
   plug Tesla.Middleware.JSON
 
-  defp parse_response({:ok, response}) do
+  @doc ~S"""
+    normalize the response body to a more consumable format
+
+    ## Examples
+
+      iex> {:ok, %{body: %{"items" => [], "page" => 1, "totalPages" => 10}}} |> FutApi.Fifa.parse_response()
+      %{items: [], page: 1, total_pages: 10}
+  """
+  def parse_response({:ok, response}) do
     %{body: body} = response
     %{
       "items" => items,

@@ -3,7 +3,6 @@ defmodule FutApi.Importer do
 
   alias FutApi.Importer.PlayersQueue
   alias FutApi.Fifa
-  alias FutApi.Repo
   alias FutApi.Fut
   alias FutApi.Importer.Parser
 
@@ -37,6 +36,7 @@ defmodule FutApi.Importer do
   end
 
   # Server
+  @spec init(any) :: {:ok, :queue.queue(any)}
   def init(_state) do
     state = PlayersQueue.get()
 
