@@ -11,18 +11,16 @@ defmodule FutApi.Endpoint do
     json_decoder: Jason
   )
 
-  # plug(Absinthe.Plug, schema: FutApi.Schema)
-
   plug(:dispatch)
 
   forward("/graphql",
     to: Absinthe.Plug,
-    init_opts: [schema: FutApi.Schema]
+    init_opts: [schema: FutApi.GraphQL.Schema]
   )
 
   forward("graphiql",
     to: Absinthe.Plug.GraphiQL,
-    init_opts: [schema: FutApi.Schema]
+    init_opts: [schema: FutApi.GraphQL.Schema]
   )
 
   get "/ping" do
