@@ -4,11 +4,7 @@ defmodule FutApi.Fifa do
   plug Tesla.Middleware.BaseUrl, "https://www.easports.com/fifa/ultimate-team/api/fut"
   plug Tesla.Middleware.JSON
 
-  def get_players do
-    get("/item")
-  end
-
-  def get_players(name) do
-    get("/item?name=#{name}")
+  def get_players(page \\ 1) do
+    get("/item?page=#{page}")
   end
 end

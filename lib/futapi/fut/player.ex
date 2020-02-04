@@ -1,4 +1,4 @@
-defmodule FutApi.Player do
+defmodule FutApi.Fut.Player do
   use Ecto.Schema
 
   schema "players" do
