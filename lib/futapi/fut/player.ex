@@ -8,7 +8,7 @@ defmodule FutApi.Fut.Player do
 
   def changeset(player, params \\ %{}) do
     player
-    |> Ecto.Changeset.cast(params, [:name, :rating])
-    |> Ecto.Changeset.validate_required([:name, :rating])
+    |> Ecto.Changeset.cast(params, [:id, :name, :rating])
+    |> Ecto.Changeset.validate_required([:id, :name, :rating])
   end
 end

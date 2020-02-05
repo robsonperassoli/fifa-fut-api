@@ -1,4 +1,5 @@
 defmodule FutApi.Importer.Parser do
+
   defp create_map([], map), do: map
 
   defp create_map([entry | entries], map) do

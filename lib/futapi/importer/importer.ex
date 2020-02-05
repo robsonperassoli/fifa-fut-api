@@ -28,7 +28,25 @@ defmodule FutApi.Importer do
 
   defp schedule_integration(), do: Process.send_after(self(), :integrate_player, 5_000)
 
+  defp schedule_next_day() do
+    # TODO: get milliseconds until next day
+    Process.send_after(self(), :fetch_players, 500_000)
+  end
+
   defp integrate_next(), do: Process.send(self(), :integrate_player, [])
+
+  defp integrate_player({:empty, new_state}) do
+    schedule_next_day()
+
+    new_state
+  end
+
+  defp integrate_player({{:value, player}, new_state}) do
+    Fut.integrate_player(player)
+    integrate_next()
+
+    new_state
+  end
 
   # Client
   def start_link(_args) do
@@ -59,13 +77,7 @@ defmodule FutApi.Importer do
   end
 
   def handle_info(:integrate_player, state) do
-    {out, new_state} = :queue.out(state)
-
-    unless out == :empty do
-      {:value, player} = out
-      Fut.create_player(player)
-      integrate_next()
-    end
+    new_state = integrate_player(:queue.out(state))
 
     {:noreply, new_state}
   end
