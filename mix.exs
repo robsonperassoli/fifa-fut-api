@@ -15,7 +15,7 @@ defmodule FutApi.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger, :plug_cowboy],
+      extra_applications: [:logger, :plug_cowboy, :timex],
       mod: {FutApi.Application, []}
     ]
   end
@@ -30,6 +30,7 @@ defmodule FutApi.MixProject do
       {:tesla, "~> 1.3.0"},
       {:ecto_sql, "~> 3.0"},
       {:postgrex, ">= 0.0.0"},
+      {:timex, "~> 3.5"},
     ]
   end
 

@@ -1,5 +1,6 @@
 defmodule FutApi.Importer do
   use GenServer
+  use Timex
 
   alias FutApi.Importer.PlayersQueue
   alias FutApi.Fifa
@@ -19,7 +20,7 @@ defmodule FutApi.Importer do
     new_players = players ++ parsed_players
 
     cond do
-      page === total_pages -> new_players
+      page === 10 -> new_players
       page < total_pages -> fetch_players(page + 1, new_players)
     end
   end
@@ -29,8 +30,14 @@ defmodule FutApi.Importer do
   defp schedule_integration(), do: Process.send_after(self(), :integrate_player, 5_000)
 
   defp schedule_next_day() do
-    # TODO: get milliseconds until next day
-    Process.send_after(self(), :fetch_players, 500_000)
+    next_execution = Timex.now
+    |> Timex.shift(days: 1)
+    |> Timex.set(hour: 2, minute: 0, second: 0)
+
+    millis_until_next_execution = Timex.diff(next_execution, Timex.now, :milliseconds)
+    IO.puts "Scheduled next execution for #{next_execution}"
+
+    Process.send_after(self(), :fetch_players, millis_until_next_execution)
   end
 
   defp integrate_next(), do: Process.send(self(), :integrate_player, [])
