@@ -20,7 +20,7 @@ defmodule FutApi.Importer do
     new_players = players ++ parsed_players
 
     cond do
-      page === 10 -> new_players
+      page === total_pages -> new_players
       page < total_pages -> fetch_players(page + 1, new_players)
     end
   end
