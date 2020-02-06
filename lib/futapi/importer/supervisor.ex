@@ -5,7 +5,6 @@ defmodule FutApi.ImporterSupervisor do
     Supervisor.start_link(__MODULE__, :ok, name: __MODULE__)
   end
 
-  @spec init(:ok) :: {:ok, {%{intensity: any, period: any, strategy: any}, [any]}}
   def init(:ok) do
     children = [
       FutApi.Importer.PlayersQueue,
