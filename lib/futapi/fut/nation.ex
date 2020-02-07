@@ -8,7 +8,7 @@ defmodule FutApi.Fut.Nation do
 
   def changeset(nation, attrs \\ %{}) do
     nation
-    |> Ecto.Changeset.cast(attrs, [:name, :image_url])
-    |> Ecto.Changeset.validate_required([:name, :image_url])
+    |> Ecto.Changeset.cast(attrs, [:id, :name, :image_url])
+    |> Ecto.Changeset.validate_required([:id, :name, :image_url])
   end
 end

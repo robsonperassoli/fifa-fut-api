@@ -10,7 +10,7 @@ defmodule FutApi.Fut.Club do
 
   def changeset(club, attrs \\ %{}) do
     club
-    |> Ecto.Changeset.cast(attrs, [:name, :image_url, :league_id])
-    |> Ecto.Changeset.validate_required([:name, :image_url, :league_id])
+    |> Ecto.Changeset.cast(attrs, [:id, :name, :image_url, :league_id])
+    |> Ecto.Changeset.validate_required([:id, :name, :image_url, :league_id])
   end
 end
