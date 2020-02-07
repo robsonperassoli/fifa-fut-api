@@ -1,6 +1,11 @@
 defmodule FutApi.Fut do
+  import Ecto.Query, warn: false
   alias FutApi.Repo
   alias FutApi.Fut.{Player, Nation, Club, League}
+
+  def data(), do: Dataloader.Ecto.new(Repo, query: &query/2)
+
+  def query(queryable, _params), do: queryable
 
   def create_player(attrs \\ %{}) do
     %Player{}
@@ -16,6 +21,13 @@ defmodule FutApi.Fut do
 
   def get_player!(id), do: Repo.get!(Player, id)
   def get_player(id), do: Repo.get(Player, id)
+
+  def list_players(%{limit: n, order: field} \\ %{limit: 20, order: :name}) do
+    Player
+    |> limit(^n)
+    |> order_by(asc: ^field)
+    |> Repo.all
+  end
 
   def create_nation(attrs \\ %{}) do
     %Nation{}

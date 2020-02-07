@@ -7,4 +7,8 @@ defmodule FutApi.GraphQL.PlayerResolver do
       player -> {:ok, player}
     end
   end
+
+  def players_list(_args, _ctx) do
+    {:ok, Fut.list_players()}
+  end
 end
