@@ -20,10 +20,22 @@ defmodule FutApi.GraphQL.Schema do
     field :name, :string
   end
 
+  object :league do
+    field :id, :id
+    field :name, :string
+  end
+
+  object :club do
+    field :id, :id
+    field :name, :string
+    field :league, :league, resolve: dataloader(:fut)
+  end
+
   object :player do
     field :id, :id
     field :name, :string
     field :nation, :nation, resolve: dataloader(:fut)
+    field :club, :club, resolve: dataloader(:fut)
   end
 
   query do
